@@ -12,6 +12,29 @@
     </div>
   </div>
 
+  @if (showCoffeePresentation) {
+    <section class="coffee-presentation" aria-labelledby="coffee-presentation-title">
+      <div class="presentation-image-wrap">
+        <img
+          class="presentation-image"
+          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=85"
+          alt="Taza de café recién preparado"
+        />
+      </div>
+      <div class="presentation-content">
+        <p class="eyebrow">Selección de la casa</p>
+        <h2 id="coffee-presentation-title">Una pausa con carácter</h2>
+        <p>
+          Descubre cafés de origen colombiano, tostados para resaltar sus notas dulces,
+          frutales y de chocolate.
+        </p>
+        <button type="button" class="btn btn-primary" (click)="refreshProducts()">
+          Ver catálogo
+        </button>
+      </div>
+    </section>
+  }
+
   @if (errorMessage) {
     <div class="alert alert-error">{{ errorMessage }}</div>
   }

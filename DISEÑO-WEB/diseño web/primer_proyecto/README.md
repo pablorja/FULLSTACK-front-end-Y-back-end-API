@@ -158,6 +158,16 @@ Se agregaron validaciones básicas para mejorar la experiencia de usuario:
 - El formulario limpia automáticamente después de guardar o actualizar
 - Si el usuario está editando, se cambia el texto a `Actualizar producto`
 
+### Módulo opcional de presentación
+
+El proyecto incluye un módulo visual preparado para mostrar una imagen y una presentación del café, pero está desactivado por defecto. Para activarlo, cambia esta propiedad a `true` en el archivo de entorno que estés usando:
+
+```ts
+showCoffeePresentation: true
+```
+
+La bandera está disponible en `src/environments/environment.ts` y `src/environments/environment.development.ts`.
+
 ### Recomendación importante
 
 El proyecto depende de que la API esté corriendo antes de cargar la lista de productos. Si la API no responde, Angular mostrará un error de conexión como:

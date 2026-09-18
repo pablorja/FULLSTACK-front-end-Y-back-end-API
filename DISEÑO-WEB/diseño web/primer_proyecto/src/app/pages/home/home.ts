@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductServices } from '../../Services/product-services';
 import { Producto } from '../../Models/productos';
+import { environment } from '../../../environments/environment';
 
 @Component({
   imports: [CurrencyPipe, FormsModule],
@@ -19,6 +20,7 @@ export class Home {
   public isLoading = false;
   public errorMessage = '';
   public successMessage = '';
+  public readonly showCoffeePresentation = environment.showCoffeePresentation;
 
   ngOnInit(): void {
     this.loadProducts();
