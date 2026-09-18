@@ -4,7 +4,12 @@
       <p class="eyebrow">Café premium</p>
       <h1>{{ editingId !== null ? 'Editar producto' : 'Catálogo de café' }}</h1>
     </div>
-    <span class="product-count">{{ products.length }} productos</span>
+    <div class="heading-actions">
+      <span class="product-count">{{ products.length }} productos</span>
+      <button type="button" class="btn btn-refresh" (click)="refreshProducts()" [disabled]="isLoading">
+        Actualizar catálogo
+      </button>
+    </div>
   </div>
 
   @if (errorMessage) {

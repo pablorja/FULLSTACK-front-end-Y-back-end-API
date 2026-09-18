@@ -52,6 +52,11 @@ export class Home {
     });
   }
 
+  refreshProducts(): void {
+    this.successMessage = '';
+    this.loadProducts();
+  }
+
   submitProduct(): void {
     const nombre = this.formModel.nombre.trim();
     const cantidad = Number(this.formModel.cantidad);
