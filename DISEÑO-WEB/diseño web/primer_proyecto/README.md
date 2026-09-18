@@ -1,6 +1,6 @@
-# Fullstack CRUD - Angular + ASP.NET Core API
+# Catalogo de Cafe - Frontend Angular
 
-Este proyecto combina un frontend en Angular con una API REST en ASP.NET Core para gestionar productos en un inventario.
+Frontend Angular del e-commerce de cafe. Consume la API ASP.NET Core ubicada en `API_C#` y muestra los datos persistidos en MySQL.
 
 ## Tecnologías
 
@@ -192,28 +192,29 @@ Eso indica que el backend no está levantado en `localhost:5031`.
 
 ---
 
-## 7) Comandos de GitHub
+## 7) Repositorio y GitHub
 
-Si quieres subir el proyecto a GitHub, usa estos comandos:
+El repositorio oficial es:
+
+```text
+https://github.com/pablorja/FULLSTACK-front-end-Y-back-end-API
+```
+
+## 8) Comandos de GitHub
+
+Si necesitas publicar cambios nuevos, usa estos comandos desde la raiz del repositorio:
 
 ```bash
 git init
 git add .
 git commit -m "CRUD fullstack Angular + API"
 git branch -M main
-git remote add origin <URL_DEL_REPOSITORIO>
 git push -u origin main
-```
-
-Ejemplo:
-
-```bash
-git remote add origin https://github.com/tu-usuario/tu-repositorio.git
 ```
 
 ---
 
-## 8) Observaciones finales
+## 9) Observaciones finales
 
 Este proyecto está listo para:
 
