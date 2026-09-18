@@ -1,0 +1,14 @@
+## Visual Studio
+.vs/
+bin/
+obj/
+
+## User secrets and env
+appsettings.secrets.json
+appsettings.*.local.json
+.env
+secrets.json
+
+## OS
+.DS_Store
+Thumbs.db

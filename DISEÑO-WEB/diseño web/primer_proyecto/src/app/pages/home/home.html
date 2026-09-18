@@ -1,0 +1,84 @@
+<main class="products-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">Café premium</p>
+      <h1>{{ editingId !== null ? 'Editar producto' : 'Catálogo de café' }}</h1>
+    </div>
+    <span class="product-count">{{ products.length }} productos</span>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+
+  @if (successMessage) {
+    <div class="alert alert-success">{{ successMessage }}</div>
+  }
+
+  <form class="product-form" (ngSubmit)="submitProduct()">
+    <div class="form-grid">
+      <label>
+        <span>Nombre del producto</span>
+        <input type="text" [(ngModel)]="formModel.nombre" name="nombre" placeholder="Ej: Café de origen colombiano" required />
+      </label>
+
+      <label>
+        <span>Cantidad</span>
+        <input type="number" min="0" [(ngModel)]="formModel.cantidad" name="cantidad" required />
+      </label>
+
+      <label>
+        <span>Precio</span>
+        <input type="number" min="0" step="0.01" [(ngModel)]="formModel.valor" name="valor" required />
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+        {{ isLoading ? 'Procesando...' : (editingId !== null ? 'Actualizar producto' : 'Guardar producto') }}
+      </button>
+
+      @if (editingId !== null) {
+        <button type="button" class="btn btn-secondary" (click)="resetForm()">
+          Cancelar
+        </button>
+      }
+    </div>
+  </form>
+
+  @if (isLoading) {
+    <p class="empty-state">Cargando catálogo...</p>
+  } @else if (products.length > 0) {
+    <div class="table-wrapper">
+      <table>
+        <caption>Productos disponibles en el catálogo de café</caption>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Precio</th>
+            <th scope="col" class="actions-column">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products; track product.id) {
+            <tr>
+              <td data-label="ID">{{ product.id }}</td>
+              <td data-label="Producto" class="product-name">{{ product.nombre }}</td>
+              <td data-label="Cantidad">{{ product.cantidad }}</td>
+              <td data-label="Precio">{{ product.valor | currency }}</td>
+              <td data-label="Acciones" class="actions-cell">
+                <button type="button" class="btn btn-small btn-edit" (click)="editProduct(product)">Editar</button>
+                <button type="button" class="btn btn-small btn-delete" (click)="deleteProduct(product.id)">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <p class="empty-state">No hay productos para mostrar en el catálogo.</p>
+  }
+</main>
+
