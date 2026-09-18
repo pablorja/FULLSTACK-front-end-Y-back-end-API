@@ -1,50 +1,86 @@
 using ConcesionarioApi.Interfaces;
 using ConcesionarioApi.Models;
+using MySqlConnector;
 
 namespace ConcesionarioApi.Repositories
 {
     public class MarcaRepository : IMarcaRepository
     {
-        private readonly List<Marca> _marcas;
+        private readonly string _connectionString;
 
-        public MarcaRepository()
+        public MarcaRepository(string connectionString)
         {
-            _marcas = new List<Marca>
-            {
-                new Marca { Id = 1, Nombre = "Toyota", Descripcion = "Marca japonesa" },
-                new Marca { Id = 2, Nombre = "Renault", Descripcion = "Marca francesa" },
-                new Marca { Id = 3, Nombre = "Chevrolet", Descripcion = "Marca estadounidense" }
-            };
+            _connectionString = connectionString;
         }
 
-        public IEnumerable<Marca> GetAll() => _marcas;
+        public IEnumerable<Marca> GetAll()
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+            using var command = new MySqlCommand("SELECT id, nombre, descripcion FROM marcas ORDER BY id;", connection);
+            using var reader = command.ExecuteReader();
+            var marcas = new List<Marca>();
+            while (reader.Read())
+            {
+                marcas.Add(Map(reader));
+            }
 
-        public Marca? GetById(int id) => _marcas.FirstOrDefault(m => m.Id == id);
+            return marcas;
+        }
+
+        public Marca? GetById(int id)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+            using var command = new MySqlCommand("SELECT id, nombre, descripcion FROM marcas WHERE id = @id;", connection);
+            command.Parameters.AddWithValue("@id", id);
+            using var reader = command.ExecuteReader();
+            return reader.Read() ? Map(reader) : null;
+        }
 
         public Marca Create(Marca marca)
         {
-            marca.Id = _marcas.Any() ? _marcas.Max(m => m.Id) + 1 : 1;
-            _marcas.Add(marca);
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+            using var command = new MySqlCommand(
+                "INSERT INTO marcas (nombre, descripcion) VALUES (@nombre, @descripcion); SELECT LAST_INSERT_ID();",
+                connection);
+            command.Parameters.AddWithValue("@nombre", marca.Nombre);
+            command.Parameters.AddWithValue("@descripcion", marca.Descripcion);
+            marca.Id = Convert.ToInt32(command.ExecuteScalar());
             return marca;
         }
 
         public bool Update(int id, Marca updatedMarca)
         {
-            var existingMarca = GetById(id);
-            if (existingMarca == null) return false;
-
-            existingMarca.Nombre = updatedMarca.Nombre;
-            existingMarca.Descripcion = updatedMarca.Descripcion;
-            return true;
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+            using var command = new MySqlCommand(
+                "UPDATE marcas SET nombre = @nombre, descripcion = @descripcion WHERE id = @id;",
+                connection);
+            command.Parameters.AddWithValue("@id", id);
+            command.Parameters.AddWithValue("@nombre", updatedMarca.Nombre);
+            command.Parameters.AddWithValue("@descripcion", updatedMarca.Descripcion);
+            return command.ExecuteNonQuery() > 0;
         }
 
         public bool Delete(int id)
         {
-            var marca = GetById(id);
-            if (marca == null) return false;
+            using var connection = new MySqlConnection(_connectionString);
+            connection.Open();
+            using var command = new MySqlCommand("DELETE FROM marcas WHERE id = @id;", connection);
+            command.Parameters.AddWithValue("@id", id);
+            return command.ExecuteNonQuery() > 0;
+        }
 
-            _marcas.Remove(marca);
-            return true;
+        private static Marca Map(MySqlDataReader reader)
+        {
+            return new Marca
+            {
+                Id = reader.GetInt32("id"),
+                Nombre = reader.GetString("nombre"),
+                Descripcion = reader.GetString("descripcion"),
+            };
         }
     }
 }

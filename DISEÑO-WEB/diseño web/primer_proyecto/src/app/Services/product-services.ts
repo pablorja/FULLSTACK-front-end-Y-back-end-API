@@ -30,7 +30,7 @@ export class ProductServices {
   private toApiCafe(product: Producto): ApiCafe {
     return {
       id: product.id,
-      marcaId: 0,
+      marcaId: 1,
       marca: '',
       nombre: product.nombre,
       origen: '',

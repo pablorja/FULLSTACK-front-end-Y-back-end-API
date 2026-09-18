@@ -8,6 +8,8 @@ Este proyecto combina un frontend en Angular con una API REST en ASP.NET Core pa
 - TypeScript
 - ASP.NET Core
 - .NET SDK
+- MySQL 8+
+- MySqlConnector
 - HTML/CSS
 - Visual Studio 2022 (para ejecutar la API)
 
@@ -44,6 +46,24 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
 ```text
 http://localhost:5031
 ```
+
+### Crear la base de datos en MySQL Workbench
+
+La base de datos se llama `cafe_ecommerce`. Abre MySQL Workbench, ejecuta todo el archivo:
+
+```text
+API_C#/database/cafe_ecommerce.sql
+```
+
+El script crea las tablas `marcas` y `cafes`, sus relaciones, restricciones y dos cafés de ejemplo.
+
+Configura la conexión de la API sin subir la contraseña a GitHub. Desde una terminal ubicada en `API_C#`:
+
+```bash
+dotnet user-secrets set "ConnectionStrings:CafeDatabase" "Server=localhost;Port=3306;Database=cafe_ecommerce;User ID=root;Password=TU_CLAVE;"
+```
+
+También puedes usar la variable de entorno `ConnectionStrings__CafeDatabase`. El archivo `appsettings.example.json` contiene el formato de referencia.
 
 ### Verificar que la API esté funcionando
 
@@ -100,7 +120,7 @@ export const environment = {
 Esto hace que las peticiones del CRUD salgan así:
 
 ```text
-http://localhost:5031/api/productos
+http://localhost:5031/api/cafes
 ```
 
 ---
@@ -155,7 +175,7 @@ Eso indica que el backend no está levantado en `localhost:5031`.
 ### Orden correcto
 
 1. Ejecuta la API en Visual Studio
-2. Verifica `http://localhost:5031/api/productos`
+2. Verifica `http://localhost:5031/api/cafes`
 3. Ejecuta el frontend con Angular
 4. Abre `http://localhost:4200`
 5. Prueba crear, editar y eliminar productos
