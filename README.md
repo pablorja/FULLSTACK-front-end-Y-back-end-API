@@ -106,4 +106,4 @@ El CRUD fue probado con operaciones POST, PUT, GET y DELETE contra MySQL.
 
 ## Autor
 
-Proyecto academico TEC-UPB.
+Pablo Santamaria — Proyecto academico TEC-UPB.

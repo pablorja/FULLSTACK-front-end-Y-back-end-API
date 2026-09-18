@@ -228,4 +228,4 @@ La parte crítica para que funcione correctamente es mantener la API levantada a
 
 ## Autor
 
-Proyecto académico — TEC-UPB
+Pablo Santamaria — Proyecto académico TEC-UPB
